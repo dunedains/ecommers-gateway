@@ -1,0 +1,137 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            # ---- Microservicios ----
+            - id: productos
+              uri: ${PRODUCTOS_URI:http://localhost:8081}
+              predicates:
+                - Path=/api/productos/**
+            - id: users
+              uri: ${USERS_URI:http://localhost:8082}
+              predicates:
+                - Path=/api/v1/users/**
+            - id: whitelist
+              uri: ${WHITELIST_URI:http://localhost:8083}
+              predicates:
+                - Path=/api/wishlist/**,/api/usuario/**
+            - id: reviews
+              uri: ${REVIEWS_URI:http://localhost:8084}
+              predicates:
+                - Path=/api/reviews/**
+            - id: inventory
+              uri: ${INVENTORY_URI:http://localhost:8085}
+              predicates:
+                - Path=/api/inventory/**
+            - id: cart
+              uri: ${CART_URI:http://localhost:8086}
+              predicates:
+                - Path=/api/cart/**
+            - id: orders
+              uri: ${ORDERS_URI:http://localhost:8087}
+              predicates:
+                - Path=/api/orders/**
+            - id: pagos
+              uri: ${PAGOS_URI:http://localhost:8088}
+              predicates:
+                - Path=/api/payments/**
+            - id: notifications
+              uri: ${NOTIFICATIONS_URI:http://localhost:8089}
+              predicates:
+                - Path=/api/notifications/**
+
+            # ---- Documentacion OpenAPI de cada servicio (para el Swagger agregado) ----
+            - id: productos-docs
+              uri: ${PRODUCTOS_URI:http://localhost:8081}
+              predicates:
+                - Path=/productos/v3/api-docs
+              filters:
+                - RewritePath=/productos/v3/api-docs, /v3/api-docs
+            - id: users-docs
+              uri: ${USERS_URI:http://localhost:8082}
+              predicates:
+                - Path=/users/v3/api-docs
+              filters:
+                - RewritePath=/users/v3/api-docs, /v3/api-docs
+            - id: whitelist-docs
+              uri: ${WHITELIST_URI:http://localhost:8083}
+              predicates:
+                - Path=/whitelist/v3/api-docs
+              filters:
+                - RewritePath=/whitelist/v3/api-docs, /v3/api-docs
+            - id: reviews-docs
+              uri: ${REVIEWS_URI:http://localhost:8084}
+              predicates:
+                - Path=/reviews/v3/api-docs
+              filters:
+                - RewritePath=/reviews/v3/api-docs, /v3/api-docs
+            - id: inventory-docs
+              uri: ${INVENTORY_URI:http://localhost:8085}
+              predicates:
+                - Path=/inventory/v3/api-docs
+              filters:
+                - RewritePath=/inventory/v3/api-docs, /v3/api-docs
+            - id: cart-docs
+              uri: ${CART_URI:http://localhost:8086}
+              predicates:
+                - Path=/cart/v3/api-docs
+              filters:
+                - RewritePath=/cart/v3/api-docs, /v3/api-docs
+            - id: orders-docs
+              uri: ${ORDERS_URI:http://localhost:8087}
+              predicates:
+                - Path=/orders/v3/api-docs
+              filters:
+                - RewritePath=/orders/v3/api-docs, /v3/api-docs
+            - id: pagos-docs
+              uri: ${PAGOS_URI:http://localhost:8088}
+              predicates:
+                - Path=/pagos/v3/api-docs
+              filters:
+                - RewritePath=/pagos/v3/api-docs, /v3/api-docs
+            - id: notifications-docs
+              uri: ${NOTIFICATIONS_URI:http://localhost:8089}
+              predicates:
+                - Path=/notifications/v3/api-docs
+              filters:
+                - RewritePath=/notifications/v3/api-docs, /v3/api-docs
+
+# URL del microservicio de usuarios para /auth (login y registro)
+services:
+  user-url: ${USERS_URI:http://localhost:8082}
+
+# Configuracion del JWT
+jwt:
+  secret: ${JWT_SECRET:clave-secreta-de-al-menos-256-bits-cambiar-en-produccion-0123456789}
+  ttl-seconds: ${JWT_TTL_SECONDS:3600}
+
+# Swagger UI agregado: un desplegable con la documentacion de cada servicio
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: productos
+        url: /productos/v3/api-docs
+      - name: users
+        url: /users/v3/api-docs
+      - name: whitelist
+        url: /whitelist/v3/api-docs
+      - name: reviews
+        url: /reviews/v3/api-docs
+      - name: inventory
+        url: /inventory/v3/api-docs
+      - name: cart
+        url: /cart/v3/api-docs
+      - name: orders
+        url: /orders/v3/api-docs
+      - name: pagos
+        url: /pagos/v3/api-docs
+      - name: notifications
+        url: /notifications/v3/api-docs
