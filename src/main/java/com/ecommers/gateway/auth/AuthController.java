@@ -61,7 +61,8 @@ public class AuthController {
     private ResponseEntity<TokenResponse> toToken(Map<String, Object> user) {
         Long id = ((Number) user.get("id")).longValue();
         String email = String.valueOf(user.get("email"));
-        String token = jwtService.generateToken(String.valueOf(id), email);
-        return ResponseEntity.ok(new TokenResponse(token, "Bearer", id, email));
+        String role = user.get("role") != null ? String.valueOf(user.get("role")) : "USER";
+        String token = jwtService.generateToken(String.valueOf(id), email, role);
+        return ResponseEntity.ok(new TokenResponse(token, "Bearer", id, email, role));
     }
 }

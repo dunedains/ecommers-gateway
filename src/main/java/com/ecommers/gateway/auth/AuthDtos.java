@@ -21,6 +21,7 @@ public class AuthDtos {
             String token,
             String tokenType,
             Long userId,
-            String email
+            String email,
+            String role
     ) {}
 }

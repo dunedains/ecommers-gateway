@@ -23,11 +23,12 @@ public class JwtService {
         this.ttlMillis = ttlSeconds * 1000;
     }
 
-    public String generateToken(String userId, String email) {
+    public String generateToken(String userId, String email, String role) {
         long now = System.currentTimeMillis();
         return Jwts.builder()
                 .subject(userId)
                 .claim("email", email)
+                .claim("role", role)
                 .issuedAt(new Date(now))
                 .expiration(new Date(now + ttlMillis))
                 .signWith(key)
