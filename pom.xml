@@ -19,6 +19,11 @@
 	</properties>
 
 	<dependencies>
+		<!-- Redis reactivo: backend del rate limiter del gateway -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+		</dependency>
 		<!-- Trazas distribuidas (Micrometer Tracing -> Tempo via Zipkin) -->
 		<dependency>
 			<groupId>io.micrometer</groupId>

@@ -4,10 +4,21 @@ server:
 spring:
   application:
     name: gateway
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
   cloud:
     gateway:
       server:
         webflux:
+          # Rate limiter aplicado a todas las rutas (10 req/s, ráfaga de 20) por usuario/IP
+          default-filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                key-resolver: "#{@userKeyResolver}"
           routes:
             # ---- Microservicios ----
             - id: productos
