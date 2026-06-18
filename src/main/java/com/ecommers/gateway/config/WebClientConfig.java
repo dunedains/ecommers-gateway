@@ -11,8 +11,9 @@ public class WebClientConfig {
     /** Cliente HTTP hacia el microservicio de usuarios (validacion de credenciales y registro). */
     @Bean
     public WebClient userServiceWebClient(
-            WebClient.Builder builder,
             @Value("${services.user-url:http://localhost:8082}") String userUrl) {
-        return builder.baseUrl(userUrl).build();
+        // Se usa el factory estatico en vez de inyectar WebClient.Builder: ese bean
+        // no esta autoconfigurado con este conjunto de dependencias en Spring Boot 4.
+        return WebClient.builder().baseUrl(userUrl).build();
     }
 }
