@@ -115,6 +115,18 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.13</version>
+				<configuration>
+					<!-- Se excluye el boilerplate sin lógica de negocio del reporte de cobertura -->
+					<excludes>
+						<exclude>**/dto/**</exclude>
+						<exclude>**/model/**</exclude>
+						<exclude>**/*Application.*</exclude>
+						<exclude>**/config/**</exclude>
+						<exclude>**/exception/**</exclude>
+						<!-- /auth: orquestación reactiva vía WebClient hacia el servicio de usuarios (integración) -->
+						<exclude>**/auth/**</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
