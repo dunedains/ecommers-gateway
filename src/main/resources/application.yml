@@ -29,7 +29,7 @@ spring:
               uri: ${USERS_URI:http://localhost:8082}
               predicates:
                 - Path=/api/v1/users/**
-            - id: whitelist
+            - id: wishlist
               uri: ${WHITELIST_URI:http://localhost:8083}
               predicates:
                 - Path=/api/wishlist/**,/api/usuario/**
@@ -71,12 +71,12 @@ spring:
                 - Path=/users/v3/api-docs
               filters:
                 - RewritePath=/users/v3/api-docs, /v3/api-docs
-            - id: whitelist-docs
+            - id: wishlist-docs
               uri: ${WHITELIST_URI:http://localhost:8083}
               predicates:
-                - Path=/whitelist/v3/api-docs
+                - Path=/wishlist/v3/api-docs
               filters:
-                - RewritePath=/whitelist/v3/api-docs, /v3/api-docs
+                - RewritePath=/wishlist/v3/api-docs, /v3/api-docs
             - id: reviews-docs
               uri: ${REVIEWS_URI:http://localhost:8084}
               predicates:
@@ -141,8 +141,8 @@ springdoc:
         url: /productos/v3/api-docs
       - name: users
         url: /users/v3/api-docs
-      - name: whitelist
-        url: /whitelist/v3/api-docs
+      - name: wishlist
+        url: /wishlist/v3/api-docs
       - name: reviews
         url: /reviews/v3/api-docs
       - name: inventory
